@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odin Signup Form</title>
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/602d755a29.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="container">
+    <main class="main">
+      <section class="hero-section">
+        <div class="hero__header">
+          <img class="hero__logo" src="images/odin-logo.png" alt="Odin Logo">
+          <h1 class="hero__company">ODIN</h1>
+        </div>
+        <img class="hero__img" src="images/coding-rafiki.svg" alt="Illustration of man typing code on laptop">
+        <p class="hero__credits">Illustration by <a class="credits__link" href="https://storyset.com/illustration/coding/rafiki" target="_blank">Storyset</a></p>
+      </section>
+      <section class="content-section">
+        <section class="intro-section">
+          <p>Your career in web development starts here!</p>
+          <p class="pad-top">Sign up <em>now</em> to get started.</p>
+        </section>
+        <section class="form-section">
+          <form action="" method="" class="form">
+            <h1 class="form__header">Sign up</h1>
+            <div class="form__item">
+              <input type="text" id="first-name" name="first-name" class="form__input" placeholder=" " required>
+              <label for="first-name" class="form__label">First Name</label>
+            </div>
+            <div class="form__item">
+              <input type="text" id="last-name" name="last-name" class="form__input" placeholder=" " required>
+              <label for="last-name" class="form__label">Last Name</label>
+            </div>
+            <div class="form__item">
+              <input type="email" id="email" name="email" class="form__input" placeholder=" " required>
+              <label for="email" class="form__label">Email Address</label>
+            </div>
+            <div class="form__item">
+              <input type="tel" id="phone" name="phone" class="form__input" placeholder=" ">
+              <label for="phone" class="form__label">Phone Number</label>
+            </div>
+            <div class="form__item">
+              <input type="password" id="password" name="password" class="form__input" placeholder=" " required>
+              <label for="password" class="form__label">Password</label>
+            </div>
+            <div class="form__item">
+              <input type="password" id="password-confirm" name="password-confirm" class="form__input" placeholder=" " required>
+              <label for="password-confirm" class="form__label">Confirm Password</label>
+            </div>
+            <div class="form__button">
+              <button class="button" type="submit">Create Account</button>
+            </div>
+          </form>
+        </section>
+        <section class="login-section">
+          <p>Already have an account? <a class="login__link" href="https://www.theodinproject.com/sign_in" target="_blank">Log in</a></p>
+        </section>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__text">Copyright &copy; 2023 by
+        <a class="footer__link" href="https://github.com/yingalice" target="_blank">yingalice</a>
+        <i class="fa-brands fa-github"></i>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
