@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Odin Signup Form</title>
-  <link rel="stylesheet" href="reset.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
   <script src="https://kit.fontawesome.com/602d755a29.js" crossorigin="anonymous"></script>
+  <script src="./js/script.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -25,7 +26,7 @@
           <p class="pad-top">Sign up <em>now</em> to get started.</p>
         </section>
         <section class="form-section">
-          <form action="" method="" class="form">
+          <form action="" method="" class="form" novalidate>
             <h1 class="form__header">Sign up</h1>
             <div class="form__item">
               <input type="text" id="first-name" name="first-name" class="form__input" placeholder=" " required>
@@ -40,7 +41,7 @@
               <label for="email" class="form__label">Email Address</label>
             </div>
             <div class="form__item">
-              <input type="tel" id="phone" name="phone" class="form__input" placeholder=" ">
+              <input type="tel" id="phone" name="phone" class="form__input" pattern="\(\d{3}\) \d{3}-\d{4}" maxlength=14 placeholder=" ">
               <label for="phone" class="form__label">Phone Number</label>
             </div>
             <div class="form__item">
@@ -57,7 +58,7 @@
           </form>
         </section>
         <section class="login-section">
-          <p>Already have an account? <a class="login__link" href="https://www.theodinproject.com/sign_in" target="_blank">Log in</a></p>
+          <p>Already have an account? <a class="login__link" href="#">Log in</a></p>
         </section>
       </section>
     </main>

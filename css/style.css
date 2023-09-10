@@ -1,18 +1,20 @@
 @font-face {
   font-family: 'Geliat';
-  src: url('fonts/geliat.woff2') format('woff2'),
-       url('fonts/geliat.woff') format('woff');
+  src: url('../fonts/geliat.woff2') format('woff2'),
+       url('../fonts/geliat.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Geliat Extra Bold';
-  src: url('fonts/geliat-extrabold.woff2') format('woff2'),
-       url('fonts/geliat-extrabold.woff') format('woff');
+  src: url('../fonts/geliat-extrabold.woff2') format('woff2'),
+       url('../fonts/geliat-extrabold.woff') format('woff');
 }
 
 :root {
   --color-text-light: rgb(255, 255, 255);
   --color-text-dark: rgb(0, 0, 0);
+  --color-error: rgb(187, 6, 40);
+  --color-optional: rgb(128, 128, 128);
   --color-border: rgb(192, 192, 192);
   --color-body-background: rgb(105, 105, 105); 
   --color-hero-background: rgb(117, 154, 163);
@@ -181,15 +183,36 @@ h1 {
   transition: all 0.1s ease-in-out;
 }
 
+.form__input:not(:required) + .form__label::after {
+  content: '(optional)';
+  font-size: 0.75rem;
+  color: var(--color-optional);
+  padding-left: 0.25rem;
+}
+
 .form__input:focus + .form__label,
 .form__input:not(:placeholder-shown) + .form__label,
 .form__input:-webkit-autofill + .form__label {
   top: -8px;
   left: 7px;
-  color: var(--color-main-accent);
   background-color: var(--color-form-background);
   font-size: 0.875rem;
   padding: 0 0.3rem;
+}
+
+.form__error-msg {
+  color: var(--color-error);
+  font-size: 0.875rem;
+  line-height: 1rem;
+  font-weight: bold;
+  padding: 0.5rem 0 0 0.75rem;
+  text-align: left;
+  white-space: pre;
+}
+
+.form__error-msg::before {
+  content: '\26A0';
+  padding-right: 0.25rem;
 }
 
 .button {
