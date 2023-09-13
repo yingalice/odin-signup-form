@@ -16,6 +16,8 @@
   --color-error: rgb(187, 6, 40);
   --color-optional: rgb(128, 128, 128);
   --color-border: rgb(192, 192, 192);
+  --color-rule-passed: rgb(0, 128, 0);
+  --color-rule-failed: rgb(128, 128, 128);
   --color-body-background: rgb(105, 105, 105); 
   --color-hero-background: rgb(117, 154, 163);
   --color-form-background: rgb(255, 255, 255);
@@ -57,10 +59,6 @@ a:visited {
 h1 {
   font-family: 'Geliat Extra Bold', sans-serif;
   font-weight: bold;
-}
-
-.pad-top {
-  padding-top: 0.75rem;
 }
 
 .container {
@@ -123,6 +121,10 @@ h1 {
   margin: 2rem 1rem 0;
 }
 
+.intro-section > p {
+  padding-bottom: 0.5rem;
+}
+
 .login-section {
   margin: 0 1rem 2rem;
 }
@@ -180,7 +182,7 @@ h1 {
   font-weight: bold;
   color: var(--color-main-accent);
   border-radius: var(--border-radius);
-  transition: all 0.1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .form__input:not(:required) + .form__label::after {
@@ -200,19 +202,68 @@ h1 {
   padding: 0 0.3rem;
 }
 
-.form__error-msg {
+.form__error {
+  --height: 24px;
+  overflow: hidden;
+  height: 0;
+  opacity: 0;
+}
+
+.form__error > p {
   color: var(--color-error);
   font-size: 0.875rem;
-  line-height: 1rem;
   font-weight: bold;
   padding: 0.5rem 0 0 0.75rem;
   text-align: left;
-  white-space: pre;
 }
 
-.form__error-msg::before {
+.form__error > p::before {
   content: '\26A0';
   padding-right: 0.25rem;
+}
+
+.form__error--expanded {
+  animation: 0.5s slide-down forwards;
+}
+
+.form__error--collapsed {
+  animation: 0.5s slide-up forwards;
+}
+
+.password__rules {
+  --height: 94px;
+  text-align: left;
+  padding-left: 0.75rem;
+  overflow: hidden;
+  height: 0;
+  opacity: 0;
+}
+
+#password[data-validation]:not(:focus) ~ .password__rules {
+  animation: 0.5s slide-up forwards;
+}
+
+#password:not(:placeholder-shown):invalid ~ .password__rules,
+#password[data-validation]:invalid ~ .password__rules,
+#password:focus ~ .password__rules {
+  animation: 0.5s slide-down forwards;
+}
+
+.password__intro {
+  font-weight: bold;
+  padding-top: 0.5rem;
+}
+
+.password__rule::before {
+  font-weight: bold;
+  padding-right: 0.25rem;
+  content: '\2718';
+  color: var(--color-rule-failed);
+}
+
+.password__rule--pass::before {
+  content: '\2714';
+  color: var(--color-rule-passed);
 }
 
 .button {
@@ -262,6 +313,28 @@ h1 {
 .footer__link:hover,
 .footer__link:active {
   color: var(--color-main-accent);
+}
+
+@keyframes slide-down {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: var(--height);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    height: var(--height);
+    opacity: 1;
+  }
+  100% {
+    height: 0;
+    opacity: 0;
+  }
 }
 
 @media (min-width: 992px){

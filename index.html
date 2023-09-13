@@ -23,7 +23,7 @@
       <section class="content-section">
         <section class="intro-section">
           <p>Your career in web development starts here!</p>
-          <p class="pad-top">Sign up <em>now</em> to get started.</p>
+          <p>Sign up <em>now</em> to get started.</p>
         </section>
         <section class="form-section">
           <form action="" method="" class="form" novalidate>
@@ -31,26 +31,39 @@
             <div class="form__item">
               <input type="text" id="first-name" name="first-name" class="form__input" placeholder=" " required>
               <label for="first-name" class="form__label">First Name</label>
+              <div class="form__error"><p></p></div>
             </div>
             <div class="form__item">
               <input type="text" id="last-name" name="last-name" class="form__input" placeholder=" " required>
               <label for="last-name" class="form__label">Last Name</label>
+              <div class="form__error"><p></p></div>
             </div>
             <div class="form__item">
               <input type="email" id="email" name="email" class="form__input" placeholder=" " required>
               <label for="email" class="form__label">Email Address</label>
+              <div class="form__error"><p></p></div>
             </div>
             <div class="form__item">
-              <input type="tel" id="phone" name="phone" class="form__input" pattern="\(\d{3}\) \d{3}-\d{4}" maxlength=14 placeholder=" ">
+              <input type="tel" id="phone" name="phone" class="form__input" maxlength=14 pattern="\(\d{3}\) \d{3}-\d{4}" placeholder=" ">
               <label for="phone" class="form__label">Phone Number</label>
+              <div class="form__error"><p></p></div>
             </div>
             <div class="form__item">
-              <input type="password" id="password" name="password" class="form__input" placeholder=" " required>
+              <input type="password" id="password" name="password" class="form__input" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$" placeholder=" " required>
               <label for="password" class="form__label">Password</label>
+              <div class="form__error"><p></p></div>
+              <div class="password__rules">
+                <p class="password__intro">Password must:</p>
+                <p class="password__rule password-length">Be a minimum of 8 characters</p>
+                <p class="password__rule password-upper">Include at least 1 uppercase letter</p>
+                <p class="password__rule password-lower">Include at least 1 lower letter</p>
+                <p class="password__rule password-digit">1nclude at least 1 digit</p>
+              </div>
             </div>
             <div class="form__item">
               <input type="password" id="password-confirm" name="password-confirm" class="form__input" placeholder=" " required>
               <label for="password-confirm" class="form__label">Confirm Password</label>
+              <div class="form__error"><p></p></div>
             </div>
             <div class="form__button">
               <button class="button" type="submit">Create Account</button>

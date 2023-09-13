@@ -2,6 +2,7 @@
 const form = document.querySelector('.form');
 const phone = document.querySelector('#phone');
 const inputItems = document.querySelectorAll('.form__input');
+let timeout;
 
 form.addEventListener('submit', validateForm);
 phone.addEventListener('input', formatPhoneNumber);
@@ -20,10 +21,11 @@ const errorMessages = {
     typeMismatch: 'Please enter a valid email address',
   },
   'phone': {
-    patternMismatch: 'Phone number must be 10 digits'
+    patternMismatch: 'Phone number must be 10 digits',
   },
   'password': {
     valueMissing: 'Please enter a strong password',
+    patternMismatch: 'Please enter a strong password',
   },
   'password-confirm': {
     valueMissing: 'Please reenter your password',
@@ -49,13 +51,11 @@ function validateForm(e) {
 
 function validateInput(e) {
   const inputElement = e.target || e;
-  let errorMessage = '';
   let inputsRequiringValidation = [inputElement];
 
-  // Skip real-time validation if user is typing in this field for the first time
-  if (e.type === 'input' && !isInputPreviouslyValidated(inputElement)) {
-    return;
-  }
+  // Skip real-time validation if user is typing in a non-password field for the first time
+  if(inputElement === password) validatePassword();
+  if (e.type === 'input' && !isInputPreviouslyValidated(inputElement)) return;
   inputElement.setAttribute('data-validation', '');
 
   if (inputElement.id.startsWith('password')) {
@@ -70,12 +70,62 @@ function validateInput(e) {
   }
 
   inputsRequiringValidation.forEach((input) => {
-    if (!isInputValid(input)) {
-      errorMessage = getErrorMessage(input) || 'Invalid format';
+    const containerElement = document.querySelector(`#${input.id} ~ .form__error`);
+    const errorElement = document.querySelector(`#${input.id} ~ .form__error > p`);
+    clearTimeout(timeout);
+    if (isInputValid(input)) {
+      if (containerElement.classList.contains('form__error--expanded')) {
+        timeout = setTimeout(() => {
+                    errorElement.textContent = '';
+                  }, 200);
+        containerElement.classList.remove('form__error--expanded');
+        containerElement.classList.add('form__error--collapsed');
+      }
+    } else {
+      errorElement.textContent = getErrorMessage(input);
+      containerElement.classList.remove('form__error--collapsed');
+      containerElement.classList.add('form__error--expanded');
     }
-  
-    showErrorMessage(input, errorMessage);  
   });
+}
+
+function validatePassword() {
+  const password = document.querySelector('#password').value;
+  const regex = {
+    length: /^.{8,}$/,
+    upper: /[A-Z]/,
+    lower: /[a-z]/,
+    digit: /\d/,
+  }
+  const rules = {
+    length: document.querySelector('.password-length'),
+    upper: document.querySelector('.password-upper'),
+    lower: document.querySelector('.password-lower'),
+    digit: document.querySelector('.password-digit'),
+  }
+
+  for (let i = 0; i < 4; i++) {
+    const ruleElement = Object.values(rules)[i];
+    const isRulePassed = Object.values(regex)[i].test(password);
+    if (isRulePassed) {
+      ruleElement.classList.add('password__rule--pass');
+    } else {
+      ruleElement.classList.remove('password__rule--pass');
+    }
+  }
+}
+
+function validatePasswordsMatch() {
+  const password = document.querySelector('#password');
+  const passwordConfirm = document.querySelector('#password-confirm');
+
+  if (password.value === passwordConfirm.value) {
+    passwordConfirm.setCustomValidity('');
+    passwordConfirm.validity.passwordMismatch = false;
+  } else {
+    passwordConfirm.setCustomValidity('passwordMismatch');
+    passwordConfirm.validity.passwordMismatch = true;
+  }
 }
 
 function formatPhoneNumber(e) {
@@ -102,27 +152,6 @@ function formatPhoneNumber(e) {
   inputElement.value = numbers;
 } 
 
-function validatePasswordsMatch() {
-  const password = document.querySelector('#password');
-  const passwordConfirm = document.querySelector('#password-confirm');
-
-  if (password.value === passwordConfirm.value) {
-    passwordConfirm.setCustomValidity('');
-    passwordConfirm.validity.passwordMismatch = false;
-  } else {
-    passwordConfirm.setCustomValidity('passwordMismatch');
-    passwordConfirm.validity.passwordMismatch = true;
-  }
-}
-
-function showErrorMessage(inputElement, errorMessage) {
-  if (errorMessage) {
-    addErrorMessage(inputElement, errorMessage);
-  } else {
-    removeErrorMessage(inputElement);
-  }
-}
-
 function getErrorMessage(inputElement) {
   const validityState = inputElement.validity;
   for (let errReason in validityState) {
@@ -131,24 +160,6 @@ function getErrorMessage(inputElement) {
       return(errMessage);
     }
   }
-}
-
-function addErrorMessage(inputElement, errorMessage) {
-  const errorElement = document.querySelector(`#${inputElement.id} ~ .form__error-msg`);
-  const p = document.createElement('p');
-
-  if (errorElement) {
-    errorElement.textContent = errorMessage;
-  } else {
-    p.classList.add('form__error-msg');
-    p.textContent = errorMessage;
-    inputElement.parentNode.appendChild(p);
-  }
-}
-
-function removeErrorMessage(inputElement) {
-  const errorElement = document.querySelector(`#${inputElement.id} ~ .form__error-msg`);
-  if (errorElement) errorElement.remove();
 }
 
 function isInputValid(inputElement) {
