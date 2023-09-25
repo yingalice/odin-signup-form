@@ -13,11 +13,11 @@
 :root {
   --color-text-light: rgb(255, 255, 255);
   --color-text-dark: rgb(0, 0, 0);
-  --color-error: rgb(187, 6, 40);
-  --color-optional: rgb(128, 128, 128);
+  --color-text-error: rgb(187, 6, 40);
+  --color-text-optional: rgb(128, 128, 128);
+  --color-rule-success: rgb(0, 128, 0);
+  --color-rule-failure: rgb(128, 128, 128);
   --color-border: rgb(192, 192, 192);
-  --color-rule-passed: rgb(0, 128, 0);
-  --color-rule-failed: rgb(128, 128, 128);
   --color-body-background: rgb(105, 105, 105); 
   --color-hero-background: rgb(117, 154, 163);
   --color-form-background: rgb(255, 255, 255);
@@ -31,7 +31,6 @@
 }
 
 html {
-  font: 16px 'Geliat', sans-serif;
   box-sizing: border-box;
 }
 
@@ -40,6 +39,7 @@ html {
 }
 
 body {
+  font: 16px / 1.1 'Geliat', sans-serif;
   color: var(--color-text-dark);
   background-color: var(--color-body-background);
   text-align: center;
@@ -58,7 +58,11 @@ a:visited {
 
 h1 {
   font-family: 'Geliat Extra Bold', sans-serif;
-  font-weight: bold;
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
 }
 
 .container {
@@ -74,11 +78,11 @@ h1 {
   width: 100%;
 }
 
-.hero-section {
+.hero {
   display: flex;
   flex-direction: column;
-  color: var(--color-text-light);
   justify-content: center;
+  color: var(--color-text-light);
   background-color: var(--color-hero-background);
   padding: 1rem 0;
   min-height: 50vh;
@@ -91,8 +95,8 @@ h1 {
 }
 
 .hero__logo {
+  width: 3.75rem;
   height: 5rem;
-  width: auto;
   margin-right: 0.5rem;
 }
 
@@ -100,40 +104,37 @@ h1 {
   font-size: 3rem;
 }
 
-.hero__credits {
-  font-size: 0.7rem;
+.hero__img-credits {
+  font-size: 0.75rem;
 }
 
-.credits__link:hover,
-.credits__link:active {
+.hero__img-credits-link:hover,
+.hero__img-credits-link:active {
   color: var(--color-text-dark);
 }
 
-.content-section {
+.content {
   background-color: var(--color-form-background-shade);
 }
 
-.form-section {
-  margin: 2rem 0;
-}
-
-.intro-section {
+.intro {
   margin: 2rem 1rem 0;
 }
 
-.intro-section > p {
-  padding-bottom: 0.5rem;
+.intro > p:first-child {
+  margin-bottom: 0.5rem;
 }
 
-.login-section {
+.login {
   margin: 0 1rem 2rem;
 }
 
 .form {
   display: grid;
-  gap: 1.5rem;
+  gap: 1.25rem;
   background-color: var(--color-form-background);
   padding: 2rem max(2rem, calc((100vw - 450px) / 2));
+  margin: 2rem 0;
   width: 100%;
 }
 
@@ -141,34 +142,36 @@ h1 {
   font-size: 2rem;
 }
 
-.form__item {
+.form__field {
   position: relative;
 }
 
 .form__input {
-  color: var(--color-text-dark);
-  background-color: transparent;
   font-family: inherit;
   font-size: 100%;
+  color: var(--color-text-dark);
+  background-color: transparent;
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
-  outline: 2px solid transparent;
-  outline-offset: -2px;
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 2.25rem 0.5rem 0.75rem;
   width: 100%;
   height: 3rem;
   transition: all 0.1s ease-in-out;
 }
 
-.form__input:hover,
-.form__input:focus {
-  outline-color: var(--color-main-accent);
+#password,
+#password-confirm {
+  padding-right: 4.5rem;
 }
 
-.form__input:-webkit-autofill,
-.form__input:-webkit-autofill:hover,
-.form__input:-webkit-autofill:focus,
-.form__input:-webkit-autofill:active {
+.form__field:hover .form__input,
+.form__input:focus {
+  outline: none;
+  border: 2px solid var(--color-main-accent);
+}
+
+.form__input:autofill,
+.form__input:-webkit-autofill {
   -webkit-background-clip: text;
   -webkit-text-fill-color: var(--color-text-dark);
   box-shadow: inset 0 0 2rem 2rem var(--color-form-autofill-background);
@@ -177,114 +180,147 @@ h1 {
 .form__label {
   position: absolute;
   left: 13px;
-  top: 16px;
-  font-size: 100%;
+  top: 15px;
   font-weight: bold;
   color: var(--color-main-accent);
   border-radius: var(--border-radius);
   transition: all 0.2s ease-in-out;
+  pointer-events: none;
 }
 
 .form__input:not(:required) + .form__label::after {
   content: '(optional)';
   font-size: 0.75rem;
-  color: var(--color-optional);
-  padding-left: 0.25rem;
+  color: var(--color-text-optional);
+  margin-left: 0.25rem;
 }
 
 .form__input:focus + .form__label,
 .form__input:not(:placeholder-shown) + .form__label,
 .form__input:-webkit-autofill + .form__label {
   top: -8px;
-  left: 7px;
-  background-color: var(--color-form-background);
+  left: 8px;
   font-size: 0.875rem;
-  padding: 0 0.3rem;
+  background-color: var(--color-form-background);
+  padding: 0 0.25rem;
+}
+
+.form__checkmark {
+  position: absolute;
+  top: 15px;
+  right: 12px;
+  background: none;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.form__input:valid:not(:placeholder-shown) ~ .form__checkmark {
+  background: url(../images/circle-checkmark.svg) no-repeat;
+  opacity: 1;
+}
+
+.form__password-visibility-toggle {
+  position: absolute;
+  top: 17px;
+  right: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--color-main-accent);
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: right 0.1s;
+}
+
+#password:valid ~ .form__password-visibility-toggle,
+#password-confirm:valid ~ .form__password-visibility-toggle {
+  right: 36px;
 }
 
 .form__error {
-  --height: 24px;
+  --height: 23px;
   overflow: hidden;
   height: 0;
   opacity: 0;
 }
 
 .form__error > p {
-  color: var(--color-error);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: bold;
-  padding: 0.5rem 0 0 0.75rem;
+  color: var(--color-text-error);
+  margin: 0.5rem 0 0 0.75rem;
   text-align: left;
 }
 
 .form__error > p::before {
   content: '\26A0';
-  padding-right: 0.25rem;
+  margin-right: 0.25rem;
 }
 
-.form__error--expanded {
+.form__error--expand {
   animation: 0.5s slide-down forwards;
 }
 
-.form__error--collapsed {
+.form__error--collapse {
   animation: 0.5s slide-up forwards;
 }
 
-.password__rules {
-  --height: 94px;
+.password-rules {
+  --height: 87px;
+  font-size: 0.875rem;
+  margin-left: 0.75rem;
   text-align: left;
-  padding-left: 0.75rem;
   overflow: hidden;
   height: 0;
   opacity: 0;
 }
 
-#password[data-validation]:not(:focus) ~ .password__rules {
-  animation: 0.5s slide-up forwards;
+.password-rules__intro {
+  margin-top: 0.5rem;
 }
 
-#password:not(:placeholder-shown):invalid ~ .password__rules,
-#password[data-validation]:invalid ~ .password__rules,
-#password:focus ~ .password__rules {
+.password-rules__rule::before {
+  content: '\2718';
+  font-weight: bold;
+  color: var(--color-rule-failure);
+  margin-right: 0.25rem;
+}
+
+.password-rules__rule--success::before {
+  content: '\2714';
+  color: var(--color-rule-success);
+}
+
+.password-rules--expand {
   animation: 0.5s slide-down forwards;
 }
 
-.password__intro {
-  font-weight: bold;
-  padding-top: 0.5rem;
+.password-rules--collapse {
+  animation: 0.5s slide-up forwards;
 }
 
-.password__rule::before {
-  font-weight: bold;
-  padding-right: 0.25rem;
-  content: '\2718';
-  color: var(--color-rule-failed);
-}
-
-.password__rule--pass::before {
-  content: '\2714';
-  color: var(--color-rule-passed);
-}
-
-.button {
-  color: var(--color-text-light);
-  background-color: var(--color-main-accent);
+.form__submit {
+  justify-self: center;
   font-size: 0.875rem;
   font-weight: bold;
+  color: var(--color-text-light);
+  background-color: var(--color-main-accent);
   border: none;
   border-radius: var(--border-radius);
-  outline: none;
   padding: 0.75rem 1.5rem;
   cursor: pointer;
   transition: background-color 0.1s ease-in-out;
 }
 
-.button:hover {
+.form__submit:hover {
   background-color: var(--color-main-accent-dark);
 }
 
-.button:focus, 
-.button:active {
+.form__submit:focus, 
+.form__submit:active {
   outline: 2px solid var(--color-main-accent-dark);
   outline-offset: 2px;
 }
@@ -344,11 +380,11 @@ h1 {
     max-width: 1600px;
   }
 
-  .hero-section {
+  .hero {
     width: 40%;
   }
 
-  .content-section {
+  .content {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -361,7 +397,7 @@ h1 {
   }
 
   .form__header,
-  .form__button {
+  .form__submit {
     grid-column: 1 / 3;
   }
 }

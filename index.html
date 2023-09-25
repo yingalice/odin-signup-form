@@ -12,68 +12,84 @@
 <body>
   <div class="container">
     <main class="main">
-      <section class="hero-section">
+      <div class="hero">
         <div class="hero__header">
           <img class="hero__logo" src="images/odin-logo.png" alt="Odin Logo">
           <h1 class="hero__company">ODIN</h1>
         </div>
         <img class="hero__img" src="images/coding-rafiki.svg" alt="Illustration of man typing code on laptop">
-        <p class="hero__credits">Illustration by <a class="credits__link" href="https://storyset.com/illustration/coding/rafiki" target="_blank">Storyset</a></p>
-      </section>
-      <section class="content-section">
-        <section class="intro-section">
+        <p class="hero__img-credits">Illustration by <a class="hero__img-credits-link" href="https://storyset.com/illustration/coding/rafiki" target="_blank">Storyset</a></p>
+      </div>
+      <div class="content">
+        <section class="intro">
           <p>Your career in web development starts here!</p>
           <p>Sign up <em>now</em> to get started.</p>
         </section>
-        <section class="form-section">
-          <form action="" method="" class="form" novalidate>
-            <h1 class="form__header">Sign up</h1>
-            <div class="form__item">
+        <form action="" method="" class="form" novalidate>
+          <h1 class="form__header">Sign up</h1>
+          <div class="form__group">
+            <div class="form__field" id="first-name-wrapper">
               <input type="text" id="first-name" name="first-name" class="form__input" placeholder=" " required>
               <label for="first-name" class="form__label">First Name</label>
-              <div class="form__error"><p></p></div>
+              <div class="form__checkmark"></div>
             </div>
-            <div class="form__item">
+            <div class="form__error"><p></p></div>
+          </div>
+          <div class="form__group">
+            <div class="form__field" id="last-name-wrapper">
               <input type="text" id="last-name" name="last-name" class="form__input" placeholder=" " required>
               <label for="last-name" class="form__label">Last Name</label>
-              <div class="form__error"><p></p></div>
+              <div class="form__checkmark"></div>
             </div>
-            <div class="form__item">
-              <input type="email" id="email" name="email" class="form__input" placeholder=" " required>
+            <div class="form__error"><p></p></div>
+          </div>
+          <div class="form__group">
+            <div class="form__field" id="email-wrapper">
+              <input type="email" id="email" name="email" class="form__input" pattern="^.+@.+\..{2,}$" placeholder=" " required>
               <label for="email" class="form__label">Email Address</label>
-              <div class="form__error"><p></p></div>
+              <div class="form__checkmark"></div>
             </div>
-            <div class="form__item">
+            <div class="form__error"><p></p></div>
+          </div>
+          <div class="form__group">
+            <div class="form__field" id="phone-wrapper">
               <input type="tel" id="phone" name="phone" class="form__input" maxlength=14 pattern="\(\d{3}\) \d{3}-\d{4}" placeholder=" ">
               <label for="phone" class="form__label">Phone Number</label>
-              <div class="form__error"><p></p></div>
+              <div class="form__checkmark"></div>
             </div>
-            <div class="form__item">
+            <div class="form__error"><p></p></div>
+          </div>
+          <div class="form__group">
+            <div class="form__field" id="password-wrapper">
               <input type="password" id="password" name="password" class="form__input" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$" placeholder=" " required>
               <label for="password" class="form__label">Password</label>
-              <div class="form__error"><p></p></div>
-              <div class="password__rules">
-                <p class="password__intro">Password must:</p>
-                <p class="password__rule password-length">Be a minimum of 8 characters</p>
-                <p class="password__rule password-upper">Include at least 1 uppercase letter</p>
-                <p class="password__rule password-lower">Include at least 1 lower letter</p>
-                <p class="password__rule password-digit">1nclude at least 1 digit</p>
-              </div>
+              <div class="form__checkmark"></div>
+              <p class="form__password-visibility-toggle">Show</p>
             </div>
-            <div class="form__item">
+            <div class="form__error"><p></p></div>
+            <div class="password-rules">
+              <p class="password-rules__intro">Password must contain:</p>
+              <p class="password-rules__rule pw-length">8 characters minimum</p>
+              <p class="password-rules__rule pw-upper">At least 1 uppercase letter</p>
+              <p class="password-rules__rule pw-lower">At least 1 lowercase letter</p>
+              <p class="password-rules__rule pw-digit">At least 1 digit</p>
+            </div>
+          </div>
+          <div class="form__group">
+            <div class="form__field" id="password-confirm-wrapper">
               <input type="password" id="password-confirm" name="password-confirm" class="form__input" placeholder=" " required>
               <label for="password-confirm" class="form__label">Confirm Password</label>
-              <div class="form__error"><p></p></div>
+              <div class="form__checkmark"></div>
+              <p class="form__password-visibility-toggle">Show</p>
             </div>
-            <div class="form__button">
-              <button class="button" type="submit">Create Account</button>
-            </div>
-          </form>
-        </section>
-        <section class="login-section">
+            <div class="form__error"><p></p></div>
+          </div>
+          <button class="form__submit" type="submit">Create Account</button>
+        </form>
+        <section class="login">
           <p>Already have an account? <a class="login__link" href="#">Log in</a></p>
         </section>
-      </section>
+      </div>
     </main>
     <footer class="footer">
       <p class="footer__text">Copyright &copy; 2023 by
