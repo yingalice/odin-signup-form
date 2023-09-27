@@ -106,8 +106,8 @@ function validateInput(e) {
     } else {
       // Clear existing timeouts, so error text doesn't get inadvertently blanked out
       clearTimeout(timeout);
+      error.textContent = getErrorMessage(input);
       if (!errorContainer.classList.contains('form__error--expand')) {
-        error.textContent = getErrorMessage(input);
         errorContainer.classList.add('form__error--expand');
         errorContainer.classList.remove('form__error--collapse');
       }
